@@ -1,11 +1,19 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
+  {{ message }}
 </template>
 
 <script>
 
 export default {
   name: 'App',
+  props: ['message'],
+  data () {
+    return {
+
+    }
+  },
+  mounted () {}
 }
 </script>
 
