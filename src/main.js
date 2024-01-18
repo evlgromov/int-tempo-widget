@@ -1,4 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const mountEl = document.querySelector("#widget");
+
+createApp(App, {
+    props: ["message"]
+}, { ...mountEl.dataset }).mount('#widget')
