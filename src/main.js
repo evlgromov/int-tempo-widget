@@ -1,9 +1,9 @@
-import App from './App.vue'
+import App from './App.ce.vue'
 import router from "./router"
 import store from "@/store";
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
 
-const mountEl = document.querySelector("#widget");
+// const mountEl = document.querySelector("#widget");
 
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({

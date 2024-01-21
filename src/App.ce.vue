@@ -10,10 +10,10 @@
 import { toRefs } from 'vue'
 export default {
   name: 'App',
-  props: ['chatbotId'],
+  // props: ['chatbotId'],
   setup(props) {
-    const { chatbotId } = toRefs(props)
-    console.log(chatbotId)
+    // const { chatbotId } = toRefs(props)
+    // console.log(chatbotId)
   }
 }
 </script>
