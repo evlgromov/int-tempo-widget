@@ -7,12 +7,13 @@
 </template>
 
 <script>
-import { toRefs } from 'vue'
 export default {
   name: 'App',
-  props: ['chatbot'],
+  props: {
+    chatbotId: String
+  },
   setup(props) {
-    console.log(props)
+
   }
 }
 </script>
