@@ -3,16 +3,13 @@ import router from "./router"
 import store from "@/store";
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
 
-// const mountEl = document.querySelector("#widget");
-
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
         render: () => h(component),
-        setup(...props) {
+        props: ['item'],
+        setup(props) {
             const app = createApp()
-
-            console.log(props)
-            // install plugins
+            console.log(props.foo)
             plugins.forEach(app.use)
 
             const inst = getCurrentInstance()
