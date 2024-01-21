@@ -9,7 +9,7 @@ const defineElement = (component, { plugins = [] } = {}) =>
         props: ['item'],
         setup(props) {
             const app = createApp()
-            console.log(props.foo)
+            console.log(props)
             plugins.forEach(app.use)
 
             const inst = getCurrentInstance()
