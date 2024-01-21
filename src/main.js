@@ -6,10 +6,8 @@ import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrent
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
         render: () => h(component),
-        props: ['item'],
-        setup(props) {
+        setup() {
             const app = createApp()
-            console.log(props)
             plugins.forEach(app.use)
 
             const inst = getCurrentInstance()
