@@ -8,9 +8,10 @@ import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrent
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
         render: () => h(component),
-        setup() {
+        setup(...props) {
             const app = createApp()
 
+            console.log(props)
             // install plugins
             plugins.forEach(app.use)
 
