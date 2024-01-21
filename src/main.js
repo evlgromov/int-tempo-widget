@@ -5,14 +5,16 @@ import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrent
 
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
-        render: () => h(component),
-        setup() {
+        props: component.props,
+        setup(props) {
             const app = createApp()
             plugins.forEach(app.use)
 
             const inst = getCurrentInstance()
             Object.assign(inst.appContext, app._context)
             Object.assign(inst.provides, app._context.provides)
+
+            return () => h(component, props)
         },
     })
 
@@ -22,10 +24,3 @@ customElements.define(
         plugins: [store, router],
     })
 )
-
-
-
-// createApp(App,  { chatbotId: mountEl.dataset.chatbotId })
-//     .use(router)
-//     .use(store)
-//     .mount('#widget');
