@@ -44,6 +44,7 @@ const sendMessage = () => {
   });
 
   newMessage.value = null;
+
 }
 
 let messages = computed(function () {
