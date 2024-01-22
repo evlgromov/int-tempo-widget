@@ -6,35 +6,21 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form name="form" @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            v-model="user.username"
-            type="text"
-            class="form-control"
-            name="username"
-            id="username"
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            v-model="user.password"
-            type="password"
-            class="form-control"
-            name="password"
-            id="password"
-          />
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
-          </button>
-        </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+      <form @submit.prevent="handleLogin">
+        <div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input v-model="username" id="username" name="username" type="text" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input v-model="email" id="email" name="email" type="email" class="form-control" />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">
+              <span>Login</span>
+            </button>
+          </div>
         </div>
       </form>
     </div>
@@ -42,77 +28,34 @@
 </template>
 
 <script setup>
-  import User from '../models/user';
-  import {computed, reactive} from "@vue/reactivity";
+  import { ref } from 'vue'
   import {useStore} from "vuex";
-  import {onMounted, ref} from "vue";
-  import {useRouter} from "vue-router";
-  const router = useRouter()
-
-  const store = useStore();
-  const user = new User('', '')
-  const loading = ref(false)
-  const message = ref('')
-  const errors = reactive({ items: [] })
+  import router from "@/router";
+  import {computed} from "@vue/reactivity";
 
   let loggedIn = computed(() => {
-      return store.state.auth.status.loggedIn
+    return store.state.auth.status.loggedIn
   })
 
-  onMounted(() => {
-    if (loggedIn.value == true) {
-      router.push('/profile');
-    }
-  })
+  const store = useStore()
+  const chatbotId = JSON.parse(localStorage.getItem('chatbotId'));
+  const username = ref('')
+  const email = ref('')
 
   const handleLogin = () => {
-      if (user.username && user.password) {
-        store.dispatch('auth/login', user).then(
-          () => {
-            router.push('/profile');
-          },
-          error => {
-            message.value =
-              (error.response && error.response.data) ||
-              error.message ||
-              error.toString();
-          }
-        );
-      }
+    store.dispatch("auth/login", {
+      username: username.value,
+      email: email.value,
+      chatbotId
+    }).then(
+      (data) => {
+        if (data.status == true && loggedIn.value == true) {
+          localStorage.setItem('dialogue_id', store.state.auth.dialogue_id);
+          router.push('/chat');
+        }
+      },
+      (error) => {}
+    );
   }
+
 </script>
-
-<style scoped>
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-</style>

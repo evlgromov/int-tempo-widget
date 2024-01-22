@@ -1,8 +1,4 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/chat">Диалоги</router-link> |
-  </div>
   <router-view />
 </template>
 
@@ -13,7 +9,7 @@ export default {
     chatbotId: String
   },
   setup(props) {
-
+    localStorage.setItem('chatbotId', props.chatbotId)
   }
 }
 </script>

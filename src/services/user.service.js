@@ -1,11 +1,15 @@
-import authHeader from './auth-header';
+import authHeader from './auth.header';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://localhost:8000/api/widget';
 
 class UserService {
-    getPublicContent() {
-        return axios.get(API_URL + 'all');
+    getMessages(id) {
+        return axios.get(`${API_URL}/dialogue/${id}`);
+    }
+
+    sendMessage(data) {
+        return axios.post(`${API_URL}/message/`, data );
     }
 
     getUserBoard() {
