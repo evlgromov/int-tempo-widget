@@ -1,11 +1,10 @@
 import AuthService from '../services/auth.service';
 
-const user = JSON.parse(localStorage.getItem('user'));
 const dialogue_id = JSON.parse(localStorage.getItem('dialogue_id'));
 
-const initialState = user && dialogue_id
-    ? { status: { loggedIn: true }, user, dialogue_id }
-    : { status: { loggedIn: false }, user: null, dialogue_id: null };
+const initialState = dialogue_id
+    ? { status: { loggedIn: true }, dialogue_id }
+    : { status: { loggedIn: false }, dialogue_id: null };
 
 export const auth = {
     namespaced: true,
@@ -25,24 +24,13 @@ export const auth = {
         }
     },
     mutations: {
-        // loginSuccess(state, user) {
-        //     state.status.loggedIn = true;
-        //     state.user = user;
-        // },
-        // loginFailure(state) {
-        //     state.status.loggedIn = false;
-        //     state.user = null;
-        // },
-        // logout(state) {
-        //     state.status.loggedIn = false;
-        //     state.user = null;
-        // },
         loginSuccess(state, dialogue_id) {
             state.status.loggedIn = true;
             state.dialogue_id = dialogue_id;
         },
         loginFailure(state) {
             state.status.loggedIn = false;
+            state.dialogue_id = null;
         }
     }
 };

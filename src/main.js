@@ -1,5 +1,4 @@
 import App from './App.ce.vue'
-import router from "./router"
 import store from "@/store/index";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
