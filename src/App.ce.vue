@@ -1,4 +1,8 @@
 <template>
+  <div id="nav">
+    <router-link to="/login">Вход</router-link> |
+    <router-link to="/chat">Диалоги</router-link> |
+  </div>
   <router-view />
 </template>
 
