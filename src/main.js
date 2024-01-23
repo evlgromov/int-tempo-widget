@@ -39,12 +39,12 @@ customElements.define(
     })
 )
 
-window.Pusher = Pusher;
-window.Echo = new Echo({
-    broadcaster: "pusher",
-    key: 'uX61xhVhREoO90BKfWW6r_0_HHgbTM8nld4Qe_kWx6Q',
-    wsHost: 'localhost',
-    wsPort: 6001,
-    cluster: "mt1",
-    forceTLS: false,
-});
+// window.Pusher = Pusher;
+// window.Echo = new Echo({
+//     broadcaster: "pusher",
+//     key: 'uX61xhVhREoO90BKfWW6r_0_HHgbTM8nld4Qe_kWx6Q',
+//     wsHost: 'localhost',
+//     wsPort: 6001,
+//     cluster: "mt1",
+//     forceTLS: false,
+// });

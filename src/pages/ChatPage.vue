@@ -61,11 +61,11 @@ const getMessages = () => {
 }
 
 const initListenChannel = () => {
-  window.Echo.channel(
-    `chatbot.${chatbotId}.${dialogueId}`
-  ).listen(".Message", async (data) => {
-    console.log(data)
-  });
+  // window.Echo.channel(
+  //   `chatbot.${chatbotId}.${dialogueId}`
+  // ).listen(".Message", async (data) => {
+  //   console.log(data)
+  // });
 }
 
 </script>
