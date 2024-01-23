@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router"
 import ChatPage from "@/pages/ChatPage";
-import Register from "@/pages/Login";
+import Login from "@/pages/Login";
 const routes = [
     {
-        path : "/",
-        component : Register,
+        path: '/',
+        redirect: '/login'
+    },
+    {
+        path : "/login",
+        component : Login,
     },
     {
         path : "/chat",
