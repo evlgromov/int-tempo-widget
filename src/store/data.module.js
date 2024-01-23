@@ -32,7 +32,12 @@ export const data = {
                     return Promise.reject(error);
                 }
             );
-        }
+        },
+        storeMessage({ commit }, data) {
+            if (data.data.message.dialogue_id == data.dialogueId) {
+                commit('storeMessageSuccess', data.data.message);
+            }
+        },
     },
     mutations: {
         getMessagesSuccess(state, messages) {
@@ -40,6 +45,12 @@ export const data = {
         },
         sendMessageSuccess(state, message) {
             state.messages.push(message);
+        },
+        storeMessageSuccess(state, message) {
+            const messageExists = state.messages.some(el => el.integration_message_id === message.integration_message_id)
+            if (!messageExists && message.direction === 'out') {
+                state.messages.push(message);
+            }
         }
     }
 };

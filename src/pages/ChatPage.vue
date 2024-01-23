@@ -1,13 +1,13 @@
 <template>
-  <div style="padding: 40px 20px 20px 20px;justify-content: flex-start !important; align-items: flex-start !important;">
+  <div style="overflow-y: scroll;padding: 40px 20px 20px 20px;justify-content: flex-start !important; align-items: flex-start !important;">
     <div style="position:absolute; top: 0px;right: 0px;cursor: pointer" @click="toggleShowWidget">
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 64 64" fill="none">
         <path d="M22.6066 21.3934C22.2161 21.0029 21.5829 21.0029 21.1924 21.3934C20.8019 21.7839 20.8019 22.4171 21.1924 22.8076L22.6066 21.3934ZM40.9914 42.6066C41.3819 42.9971 42.0151 42.9971 42.4056 42.6066C42.7961 42.2161 42.7961 41.5829 42.4056 41.1924L40.9914 42.6066ZM21.1924 41.1924C20.8019 41.5829 20.8019 42.2161 21.1924 42.6066C21.5829 42.9971 22.2161 42.9971 22.6066 42.6066L21.1924 41.1924ZM42.4056 22.8076C42.7961 22.4171 42.7961 21.7839 42.4056 21.3934C42.0151 21.0029 41.3819 21.0029 40.9914 21.3934L42.4056 22.8076ZM21.1924 22.8076L40.9914 42.6066L42.4056 41.1924L22.6066 21.3934L21.1924 22.8076ZM22.6066 42.6066L42.4056 22.8076L40.9914 21.3934L21.1924 41.1924L22.6066 42.6066Z" fill="black"/>
       </svg>
     </div>
     <div>
-      <div style="overflow-y: scroll; padding: 20px;" v-for="message in messages">
-        <div :style="message.direction == 'out' ? 'text-align: right' : 'text-align: left'">
+      <div style="padding: 20px;" v-for="message in messages">
+        <div :style="message.direction == 'in' ? 'text-align: right' : 'text-align: left'">
           {{ message.message }}
         </div>
       </div>
@@ -69,6 +69,7 @@ const emit = defineEmits(["toggle-view", 'toggle-show-widget'])
 
 const toggleShowWidget = () => {
   emit('toggle-show-widget')
+  window.Echo.leave(`chatbot.${chatbotId}.${dialogueId}`);
 }
 
 const getMessages = () => {
@@ -79,8 +80,9 @@ const initListenChannel = () => {
   window.Echo.channel(
     `chatbot.${chatbotId}.${dialogueId}`
   ).listen(".Message", async (data) => {
-    console.log(data)
+    store.dispatch("data/storeMessage", { data, dialogueId })
   });
+
 }
 
 </script>
