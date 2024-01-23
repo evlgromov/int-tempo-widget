@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="z-index: 1100;">
     <div v-if="showWidget" style="display:flex;flex-direction: column;background: #fff;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);width: 600px;height: 800px;position:absolute;bottom: 20px;right: 20px;z-index: 10;border-radius: 8px;">
       <ChatPage v-if="dialogueId" @toggleShowWidget="toggleShowWidget"/>
       <Login v-else @toggleView="toggleView" @toggleShowWidget="toggleShowWidget"/>
