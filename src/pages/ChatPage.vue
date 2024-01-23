@@ -61,7 +61,7 @@ const getMessages = () => {
 }
 
 const initListenChannel = () => {
-  Echo.channel(
+  window.Echo.channel(
     `chatbot.${chatbotId}.${dialogueId}`
   ).listen(".Message", async (data) => {
     console.log(data)
