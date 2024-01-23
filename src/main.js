@@ -35,7 +35,7 @@ const defineElement = (component, { plugins = [] } = {}) =>
 customElements.define(
     'int-tempo-widget',
     defineElement(App, {
-        plugins: [store, router],
+        plugins: [store],
     })
 )
 

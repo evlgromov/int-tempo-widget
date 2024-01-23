@@ -1,30 +1,34 @@
 <template>
-  <div>
-    <div v-for="message in messages">
-      <div :style="message.direction == 'out' ? 'text-align: right' : 'text-align: left'">
-        {{ message.message }}
+  <div style="padding: 10px;justify-content: flex-start !important; align-items: flex-start !important;">
+    <div>
+      <div style="overflow-y: scroll; padding: 20px;" v-for="message in messages">
+        <div :style="message.direction == 'out' ? 'text-align: right' : 'text-align: left'">
+          {{ message.message }}
+        </div>
       </div>
     </div>
+    <form>
+      <div style="display:flex; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%)">
+        <div>
+          <div>
+            <input
+              v-model="newMessage"
+              type="text"
+              placeholder="Введите текст сообщения..."
+            />
+          </div>
+        </div>
+        <div style="margin-left: 10px;">
+          <button
+            @click.prevent="sendMessage"
+            class="flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+          >
+            <span>Отправить</span>
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
-  <form>
-    <div>
-      <div>
-        <input
-          v-model="newMessage"
-          type="text"
-          placeholder="Введите текст сообщения..."
-        />
-      </div>
-    </div>
-    <div>
-      <button
-        @click.prevent="sendMessage"
-        class="flex items-center justify-center bg-orange-500 hover:bg-orange-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
-      >
-        <span>Отправить</span>
-      </button>
-    </div>
-  </form>
 </template>
 
 <script setup>

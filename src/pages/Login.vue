@@ -1,19 +1,14 @@
 <template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
+  <div class="col-md-12" style="width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;">
+    <div>
       <form @submit.prevent="handleLogin">
         <div>
-          <div class="form-group">
-            <label for="username">Username</label>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label for="username" style="margin-right:10px;">Username</label>
             <input v-model="username" id="username" name="username" type="text" class="form-control" />
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label for="email" style="margin-right:10px;">Email</label>
             <input v-model="email" id="email" name="email" type="email" class="form-control" />
           </div>
           <div class="form-group">
@@ -30,7 +25,6 @@
 <script setup>
   import { ref } from 'vue'
   import {useStore} from "vuex";
-  import router from "@/router";
   import {computed} from "@vue/reactivity";
 
   let loggedIn = computed(() => {
@@ -41,6 +35,7 @@
   const chatbotId = JSON.parse(localStorage.getItem('chatbotId'));
   const username = ref('')
   const email = ref('')
+  const emit = defineEmits(["toggle-view"])
 
   const handleLogin = () => {
     store.dispatch("auth/login", {
@@ -51,7 +46,7 @@
       (data) => {
         if (data.status == true && loggedIn.value == true) {
           localStorage.setItem('dialogue_id', store.state.auth.dialogue_id);
-          router.push('/chat');
+          emit('toggle-view')
         }
       },
       (error) => {}
