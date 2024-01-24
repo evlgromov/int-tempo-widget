@@ -1,10 +1,10 @@
 import AuthService from '../services/auth.service';
 
-const dialogue_id = JSON.parse(localStorage.getItem('dialogue_id'));
+const dialogueUuid = localStorage.getItem('dialogue_uuid');
 
-const initialState = dialogue_id
-    ? { status: { loggedIn: true }, dialogue_id }
-    : { status: { loggedIn: false }, dialogue_id: null };
+const initialState = dialogueUuid
+    ? { status: { loggedIn: true }, dialogueUuid }
+    : { status: { loggedIn: false }, dialogueUuid: null };
 
 export const auth = {
     namespaced: true,
@@ -13,7 +13,7 @@ export const auth = {
         login({ commit }, user) {
             return AuthService.login(user).then(
                 response => {
-                    commit('loginSuccess', response.data.data.dialogue_id);
+                    commit('loginSuccess', response.data.data.dialogue_uuid);
                     return Promise.resolve(response.data);
                 },
                 error => {
@@ -24,13 +24,13 @@ export const auth = {
         }
     },
     mutations: {
-        loginSuccess(state, dialogue_id) {
+        loginSuccess(state, dialogueUuid) {
             state.status.loggedIn = true;
-            state.dialogue_id = dialogue_id;
+            state.dialogueUuid = dialogueUuid;
         },
         loginFailure(state) {
             state.status.loggedIn = false;
-            state.dialogue_id = null;
+            state.dialogueUuid = null;
         }
     }
 };

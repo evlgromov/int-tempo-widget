@@ -6,8 +6,7 @@ class AuthService {
     login(user) {
         return axios.post(API_URL + 'login', {
             username: user.username,
-            email: user.email,
-            chatbotId: user.chatbotId
+            chatbot_uuid: user.chatbot_uuid
         });
     }
 }

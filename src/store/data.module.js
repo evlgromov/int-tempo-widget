@@ -1,11 +1,12 @@
 import UserService from '../services/user.service';
 
-const chatbotId = JSON.parse(localStorage.getItem('chatbotId'));
+const chatbotId = localStorage.getItem('chatbotId');
 
 export const data = {
     namespaced: true,
     state: {
         chatbotId,
+        dialogueId: null,
         messages: []
     },
     actions: {
@@ -33,6 +34,18 @@ export const data = {
                 }
             );
         },
+        getDialogueData({ commit }, data) {
+            return UserService.getDialogueData(data).then(
+                response => {
+                    commit('storeDialogueDataSuccess', response.data.data);
+                    return Promise.resolve(response.data);
+                },
+                error => {
+                    commit('storeDialogueDataFailure');
+                    return Promise.reject(error);
+                }
+            );
+        },
         storeMessage({ commit }, data) {
             if (data.data.message.dialogue_id == data.dialogueId) {
                 commit('storeMessageSuccess', data.data.message);
@@ -51,6 +64,10 @@ export const data = {
             if (!messageExists && message.direction === 'out') {
                 state.messages.push(message);
             }
+        },
+        storeDialogueDataSuccess(state, data) {
+            state.chatbotId = data.chatbot_id;
+            state.dialogueId = data.dialogue_id;
         }
     }
 };

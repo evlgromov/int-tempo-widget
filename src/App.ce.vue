@@ -1,7 +1,7 @@
 <template>
   <div style="z-index: 1100;">
     <div v-if="showWidget" style="display:flex;flex-direction: column;background: #fff;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);width: 600px;height: 800px;position:absolute;bottom: 20px;right: 20px;z-index: 10;border-radius: 8px;">
-      <ChatPage v-if="dialogueId" @toggleShowWidget="toggleShowWidget"/>
+      <ChatPage v-if="dialogueUuid" @toggleShowWidget="toggleShowWidget"/>
       <Login v-else @toggleView="toggleView" @toggleShowWidget="toggleShowWidget"/>
     </div>
     <div v-else @click="toggleShowWidget">
@@ -28,37 +28,28 @@ export default {
   name: 'App',
   components: {ChatPage, Login},
   props: {
-    chatbotId: String
+    chatbotUuid: String
   },
   setup(props) {
-    localStorage.setItem('chatbotId', props.chatbotId)
-    const dialogueId = ref(localStorage.getItem('dialogue_id'))
+    localStorage.setItem('chatbot_uuid', props.chatbotUuid)
 
+    const dialogueUuid = ref(localStorage.getItem('dialogue_uuid'))
     const showWidget = ref(false)
 
     const toggleShowWidget = () => {
       showWidget.value = !showWidget.value
     }
 
-    const toggleView = (id) => {
-      dialogueId.value = id;
+    const toggleView = (uuid) => {
+      dialogueUuid.value = uuid;
     }
 
-    return { dialogueId, toggleView, showWidget, toggleShowWidget }
+    return { dialogueUuid, toggleView, showWidget, toggleShowWidget }
   }
 }
 </script>
 
 <style scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
 .widget {
   background: #fff;
   box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);

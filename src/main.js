@@ -3,17 +3,6 @@ import store from "@/store/index";
 import Echo from "laravel-echo";
 import Pusher from "pusher-js";
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance } from 'vue'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-    faHome,
-    faUser,
-    faUserPlus,
-    faSignInAlt,
-    faSignOutAlt
-} from '@fortawesome/free-solid-svg-icons';
-
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
@@ -21,7 +10,6 @@ const defineElement = (component, { plugins = [] } = {}) =>
         setup(props) {
             const app = createApp()
             plugins.forEach(app.use)
-            app.component('font-awesome-icon', FontAwesomeIcon)
 
             const inst = getCurrentInstance()
             Object.assign(inst.appContext, app._context)

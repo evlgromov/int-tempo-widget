@@ -12,10 +12,6 @@
             <label for="username" style="margin-right:10px;">Username</label>
             <input v-model="username" id="username" name="username" type="text" class="form-control" />
           </div>
-          <div class="form-group" style="margin-bottom: 10px;">
-            <label for="email" style="margin-right:10px;">Email</label>
-            <input v-model="email" id="email" name="email" type="email" class="form-control" />
-          </div>
           <div class="form-group">
             <button class="btn btn-primary btn-block">
               <span>Login</span>
@@ -37,9 +33,8 @@
   })
 
   const store = useStore()
-  const chatbotId = JSON.parse(localStorage.getItem('chatbotId'));
+  const chatbotUuid = ref(localStorage.getItem('chatbot_uuid'));
   const username = ref('')
-  const email = ref('')
   const emit = defineEmits(["toggle-view", 'toggle-show-widget'])
 
   const toggleShowWidget = () => {
@@ -49,17 +44,15 @@
   const handleLogin = () => {
     store.dispatch("auth/login", {
       username: username.value,
-      email: email.value,
-      chatbotId
+      chatbot_uuid: chatbotUuid.value
     }).then(
       (data) => {
         if (data.status == true && loggedIn.value == true) {
-          localStorage.setItem('dialogue_id', store.state.auth.dialogue_id);
-          emit('toggle-view', store.state.auth.dialogue_id)
+          localStorage.setItem('dialogue_uuid', store.state.auth.dialogueUuid);
+          emit('toggle-view', store.state.auth.dialogueUuid)
         }
       },
       (error) => {}
     );
   }
-
 </script>

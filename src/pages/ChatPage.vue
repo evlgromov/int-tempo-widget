@@ -41,14 +41,12 @@ import { onMounted, computed, ref } from 'vue'
 import { useStore } from "vuex";
 
 const store = useStore();
-const dialogueId = localStorage.getItem('dialogue_id');
-const chatbotId = localStorage.getItem('chatbotId');
 const newMessage = ref(null);
 
 const sendMessage = () => {
   store.dispatch("data/sendMessage", {
-    'chat_bot_id': chatbotId,
-    'dialogue_id': dialogueId,
+    'chat_bot_id': store.state.data.chatbotId,
+    'dialogue_id': store.state.data.dialogueId,
     'message': newMessage.value
   });
 
@@ -61,28 +59,29 @@ let messages = computed(function () {
 });
 
 onMounted(() => {
-  getMessages();
   initListenChannel();
+  getMessages();
 })
 
 const emit = defineEmits(["toggle-view", 'toggle-show-widget'])
 
 const toggleShowWidget = () => {
   emit('toggle-show-widget')
-  window.Echo.leave(`chatbot.${chatbotId}.${dialogueId}`);
+  window.Echo.leave(`chatbot.${store.state.data.chatbotId}.${store.state.data.dialogueId}`);
 }
 
 const getMessages = () => {
-  store.dispatch("data/getMessages", dialogueId);
+  store.dispatch("data/getMessages", store.state.auth.dialogueUuid);
 }
 
-const initListenChannel = () => {
-  window.Echo.channel(
-    `chatbot.${chatbotId}.${dialogueId}`
-  ).listen(".Message", async (data) => {
-    store.dispatch("data/storeMessage", { data, dialogueId })
-  });
+const initListenChannel = async () => {
+  await store.dispatch("data/getDialogueData", { dialogue_uuid: store.state.auth.dialogueUuid });
 
+  window.Echo.channel(
+    `chatbot.${store.state.data.chatbotId}.${store.state.data.dialogueId}`
+  ).listen(".Message", async (data) => {
+    store.dispatch("data/storeMessage", { data, dialogueId: store.state.data.dialogueId })
+  });
 }
 
 </script>
