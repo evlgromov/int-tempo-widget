@@ -1,5 +1,5 @@
 <template>
-  <div style="z-index: 1100;font-family: 'Inter';">
+  <div style="z-index: 1100;font-family: 'Inter';position:absolute;bottom: 20px;right: 20px;">
     <div v-if="showWidget" style="overflow: hidden;display:flex;flex-direction: column;background: #fff;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);width: 450px;height: 850px;border-radius: 16px;">
       <ChatPage v-if="dialogueUuid" @toggleShowWidget="toggleShowWidget" style="overflow: scroll"/>
       <Login v-else @toggleView="toggleView" @toggleShowWidget="toggleShowWidget"/>
