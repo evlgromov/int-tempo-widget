@@ -11,7 +11,7 @@
       </div>
     </div>
     <div style="padding: 80px 0;">
-      <div id="message" style="padding: 20px;" v-for="message in messages">
+      <div class="message" style="padding: 20px;" v-for="message in messages">
         <div :style="message.direction == 'in' ? 'text-align: right' : 'text-align: left'">
           {{ message.message }}
         </div>
@@ -91,8 +91,9 @@ const initListenChannel = async () => {
 
 </script>
 
-<style scoped>
-#message {
-  color: #FA7205;
+<style lang="scss" scoped>
+.message {
+  color: #ffffff;
+  background: #000;
 }
 </style>
