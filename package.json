@@ -10,7 +10,7 @@
     "axios": "^1.6.5",
     "core-js": "^3.8.3",
     "laravel-echo": "^1.15.3",
-    "node-sass": "^9.0.0",
+    "moment": "^2.30.1",
     "pusher-js": "^8.4.0-rc2",
     "vue": "^3.2.13",
     "vuex": "^4.0.2"
@@ -19,7 +19,6 @@
     "@babel/core": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
-    "sass": "^1.70.0",
     "sass-loader": "^10.5.2"
   },
   "browserslist": [

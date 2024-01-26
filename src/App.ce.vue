@@ -1,6 +1,6 @@
 <template>
-  <div style="z-index: 1100;font-family: 'inter';">
-    <div v-if="showWidget" style="display:flex;flex-direction: column;background: #fff;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);width: 450px;height: 850px;position:absolute;bottom: 20px;right: 20px;z-index: 10;border-radius: 16px;">
+  <div style="z-index: 1100;font-family: 'Inter'">
+    <div v-if="showWidget" style="overflow: hidden;display:flex;flex-direction: column;background: #fff;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);width: 450px;height: 850px;position:absolute;bottom: 20px;right: 20px;z-index: 10;border-radius: 16px;">
       <ChatPage v-if="dialogueUuid" @toggleShowWidget="toggleShowWidget" style="overflow: scroll"/>
       <Login v-else @toggleView="toggleView" @toggleShowWidget="toggleShowWidget"/>
     </div>
@@ -18,7 +18,7 @@
 <script>
 import Login from "@/pages/Login";
 import ChatPage from "@/pages/ChatPage";
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 export default {
   name: 'App',
@@ -28,6 +28,23 @@ export default {
   },
   setup(props) {
     localStorage.setItem('chatbot_uuid', props.chatbotUuid)
+
+    onMounted(() => {
+      let link1 = document.createElement('link')
+      link1.setAttribute('rel', 'preconnect')
+      link1.setAttribute('href', 'https://fonts.googleapis.com')
+      document.head.appendChild(link1)
+
+      let link2 = document.createElement('link')
+      link2.setAttribute('rel', 'preconnect')
+      link2.setAttribute('href', 'https://fonts.gstatic.com')
+      document.head.appendChild(link2)
+
+      let link3 = document.createElement('link')
+      link3.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap')
+      link3.setAttribute('rel', 'stylesheet')
+      document.head.appendChild(link3)
+    })
 
     const dialogueUuid = ref(localStorage.getItem('dialogue_uuid'))
     const showWidget = ref(false)

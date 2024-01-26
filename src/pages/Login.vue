@@ -9,12 +9,14 @@
       <form @submit.prevent="handleLogin">
         <div>
           <div class="form-group" style="margin-bottom: 10px;">
-            <label for="username" style="margin-right:10px;">Username</label>
-            <input v-model="username" id="username" name="username" type="text" class="form-control" />
+            <input v-model="username" id="username" name="username" type="text" class="form-control"
+               style="height: 40px;border-radius: 8px;padding: 0 20px;font-size: 18px;"
+               placeholder="Введите имя"
+            />
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">
-              <span>Login</span>
+            <button style="width: 100%;background: #FA7205;border: none;height: 40px;border-radius: 12px">
+              <span style="color: #fff; font-size: 18px;">Войти</span>
             </button>
           </div>
         </div>
