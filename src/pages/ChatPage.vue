@@ -45,6 +45,12 @@
   </div>
 </template>
 
+<style>
+  .message {
+    color: red;
+  }
+</style>
+
 <script setup>
 import { onMounted, computed, ref } from 'vue'
 import { useStore } from "vuex";
