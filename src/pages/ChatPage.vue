@@ -17,7 +17,7 @@
           :style="message.direction == 'in' ? 'justify-content: flex-end;text-align:right' : 'justify-content: flex-start;text-align:left'"
         >
           <div style="max-width: 300px">
-            <div style="padding: 20px;background: #F9FAFB;border-radius: 8px;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);">
+            <div class="message" style="padding: 20px;background: #F9FAFB;border-radius: 8px;box-shadow: 0px 0px 15px 0px rgba(34, 60, 80, 0.2);">
               {{ message.message }}
             </div>
             <span style="font-size: 12px;color:#4B5563">{{ moment.unix(message.integration_created_at).format("HH:mm") }}</span>
