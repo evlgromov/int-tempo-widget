@@ -7,9 +7,15 @@ import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrent
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
         props: component.props,
-        styles: [
-
-        ],
+        styles: [`
+            .messages::-webkit-scrollbar {
+              display: none;
+            }
+            .messages {
+              -ms-overflow-style: none;  /* IE and Edge */
+              scrollbar-width: none;  /* Firefox */
+            }
+        `],
         setup(props) {
             const app = createApp()
             plugins.forEach(app.use)
