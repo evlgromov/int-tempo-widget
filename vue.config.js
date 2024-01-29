@@ -5,5 +5,6 @@ module.exports = defineConfig({
     optimization: {
       splitChunks: false,
     },
+
   },
 })

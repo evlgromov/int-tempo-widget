@@ -7,6 +7,9 @@ import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrent
 const defineElement = (component, { plugins = [] } = {}) =>
     VueDefineCustomElement({
         props: component.props,
+        styles: [
+
+        ],
         setup(props) {
             const app = createApp()
             plugins.forEach(app.use)
@@ -25,6 +28,8 @@ customElements.define(
         plugins: [store],
     })
 )
+
+// createApp(App).use(store).mount('#app')
 
 window.Pusher = Pusher;
 window.Echo = new Echo({

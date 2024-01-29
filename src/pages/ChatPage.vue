@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh;background-image: url('/images/bg.jpeg');" ref="container">
+  <div style="height: 100vh;background-image: url('https://cdn.jsdelivr.net/gh/evlgromov/int-tempo-widget@dev3/public/bg.jpg');" ref="container">
     <div style="position:absolute;top: 0;left: 0;right: 0;padding-left:20px ;height: 60px;border-top-left-radius:16px;border-top-right-radius:16px;display:flex;justify-content:space-between;align-items: center;background:#FA7205;">
       <div style="font-size: 20px;color: #fff;font-weight: 600;">
         Онлайн-консультация
