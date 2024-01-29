@@ -1,4 +1,5 @@
 import UserService from '../services/user.service';
+import moment from "moment";
 
 const chatbotId = localStorage.getItem('chatbotId');
 
@@ -55,6 +56,11 @@ export const data = {
     mutations: {
         getMessagesSuccess(state, messages) {
             state.messages = messages;
+            state.messages.push({
+                message: 'Мы онлайн! Задайте Ваш вопрос в чате.',
+                direction: 'out',
+                integration_created_at: moment().unix()
+            })
         },
         sendMessageSuccess(state, message) {
             state.messages.push(message);

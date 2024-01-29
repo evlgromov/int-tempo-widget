@@ -1,5 +1,5 @@
 <template>
-  <div class="messages" style="height: 100vh;background-image: url('https://cdn.jsdelivr.net/gh/evlgromov/int-tempo-widget@dev3/public/bg.png');background-size: cover;background-position: center center;" ref="container">
+  <div class="messages" style="height: 100vh;background-image: url('https://cdn.jsdelivr.net/gh/evlgromov/int-tempo-widget@dev3/src/assets/images/bg.png');background-size: cover;background-position: center center;" ref="container">
     <div style="position:absolute;top: 0;left: 0;right: 0;padding-left:20px ;height: 60px;border-top-left-radius:16px;border-top-right-radius:16px;display:flex;justify-content:space-between;align-items: center;background:#FA7205;">
       <div style="font-size: 20px;color: #fff;font-weight: 600;">
         Онлайн-консультация
@@ -11,7 +11,17 @@
       </div>
     </div>
     <div style="padding: 80px 0 260px; display:flex; flex-direction: column">
-      <div style="padding: 10px;" v-for="message in messages">
+      <div style="padding: 10px;" v-for="(message, index) in messages">
+        <div style="display:flex;justify-content:center;">
+          <span
+            style="text-align: center;color:#4B5563;margin-bottom: 20px;"
+            v-if="(index > 0
+              && moment.unix(messages[index - 1].integration_created_at).format('LL') != moment.unix(message.integration_created_at).format('LL'))
+              || index == 0
+            ">
+            {{ moment.unix(message.integration_created_at).locale("ru").format('LL') }}
+          </span>
+        </div>
         <div
           style="display: flex;"
           :style="message.direction == 'in' ? 'justify-content: flex-end;text-align:right' : 'justify-content: flex-start;text-align:left'"
@@ -45,28 +55,24 @@
   </div>
 </template>
 
-<style>
-  .message {
-    color: red;
-  }
-</style>
-
 <script setup>
 import { onMounted, computed, ref } from 'vue'
 import { useStore } from "vuex";
 import moment from 'moment';
 
 const store = useStore();
-const newMessage = ref(null);
+const newMessage = ref('');
 
 const sendMessage = () => {
-  store.dispatch("data/sendMessage", {
-    'chat_bot_id': store.state.data.chatbotId,
-    'dialogue_id': store.state.data.dialogueId,
-    'message': newMessage.value
-  });
-
-  newMessage.value = null;
+  if (newMessage.value.length > 0) {
+    store.dispatch("data/sendMessage", {
+      'chat_bot_id': store.state.data.chatbotId,
+      'dialogue_id': store.state.data.dialogueId,
+      'message': newMessage.value
+    });
+    container.value.scrollTop += 100;
+    newMessage.value = '';
+  }
 
 }
 
@@ -98,8 +104,18 @@ const initListenChannel = async () => {
   window.Echo.channel(
     `chatbot.${store.state.data.chatbotId}.${store.state.data.dialogueId}`
   ).listen(".Message", async (data) => {
-    store.dispatch("data/storeMessage", { data, dialogueId: store.state.data.dialogueId })
+    await store.dispatch("data/storeMessage", { data, dialogueId: store.state.data.dialogueId })
+    if (data.message.direction == 'out') {
+      container.value.scrollTop += 100;
+      soundWarning();
+    }
   });
+}
+
+function soundWarning() {
+  var audio = new Audio();
+  audio.src = 'https://cdn.jsdelivr.net/gh/evlgromov/int-tempo-widget@dev3/src/assets/sounds/message.mp3';
+  audio.autoplay = true;
 }
 
 </script>
